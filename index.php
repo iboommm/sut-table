@@ -12,12 +12,12 @@
 		$maxTime = 0;
 		$minTime = 24;
 
-		$fData[0] = "We08:00-10:00 Lab Com 1\nTu08:00-10:00 Lab Com 1";
+		$fData[0] = "We08:00-10:30 Lab Com 1\nTu08:00-10:00 Lab Com 1";
 		$fData[1] = "Tu13:00-15:00 Lab Com 1\nMo13:00-15:00 Lab Com 1";
 		$fData[2] = "Th09:00-12:00 Lab Com 1";
-		$fData[3] = "Mo17:00-19:00 Lab Com 1";
-		$fData[4] = "Mo08:00-10:00 Lab Com 1";
-		$fData[5] = "Fr08:00-10:00 Lab Com 1\nTh18:00-20:00 Lab Com 1";
+		$fData[3] = "Mo17:00-18:00 Lab Com 1";
+		$fData[4] = "Mo09:00-10:00 Lab Com 1";
+		$fData[5] = "Fr18:00-20:00 Lab Com 1\nTh13:00-20:00 Lab Com 1";
 		
 		$fName[0] = "514124";
 		$fName[1] = "543545";
@@ -25,6 +25,7 @@
 		$fName[3] = "121133";
 		$fName[4] = "202122";
 		$fName[5] = "764223";
+
 		$c2 = 0;
 		for($i=0;$i<sizeof($fName);$i++) {
 			$xx = explode("\n", $fData[$i]);
@@ -122,7 +123,7 @@
 
 
 		
-		foreach ($test as $a) {
+		foreach ($tmp as $a) {
 			$b = substr($a, 2,11);
 			$min  = explode("-", $b);
 			$max  = explode("-", $b);
@@ -157,9 +158,12 @@
 			$b2 = substr($time2, 0,2);
 
 			if(strcasecmp($b1, $b2) == 0) {
+
 				$b1 = substr($time1, 8,2);
-				$b2 = substr($time2, 8,2);
+				$b2 = substr($time2, 2,2);
+				//echo "== ".$b1." ".$b2." ==";
 				return abs($b1-$b2);
+
 			}else {
 				return 0;
 			}
@@ -245,7 +249,6 @@
 		<tr>
 		<td width="<?php echo $pe; ?>">Day</td>
 		<?php 
-
 			for($i = $minDay[0]; $i < $maxDay;$i++) {
 					for($i = $minTime; $i < $maxTime;$i++) {
 						$i = $i+0;
@@ -262,39 +265,45 @@
 		</tr>
 		<?php
 		$tmp_c = 0;
+		$maxCell = $maxTime-$minTime;
 		for($day = $minDay;$day <= $maxDay;$day++) {
 				echo "<tr><td>".genDay($day)."</td>";
 				$i =0;
+				$end = 0;
 				while($i < $numTime[$day]) {
 					if(calFirstTime($tmp[$tmp_c],$minTime) > 0 && $i == 0) {
 						for($x = 0;$x < calFirstTime($tmp[$tmp_c],$minTime);$x++) {
 							echo "<td></td>";
+							$end++;
 						}
 					}
-
 					$cut_S = substr($tmp[$tmp_c], 25);
-
 					echo "<td align='center' colspan='".calTimeRange($tmp[$tmp_c])."''>".$cut_S."</td>";
+					$end+=calTimeRange($tmp[$tmp_c]);
 
-					if($i == $numTime[$day]-1) {
-						for($x = 0;$x < calLastTime($tmp[$tmp_c],$maxTime);$x++) {
-							echo "<td></td>";
-						}
-					}
+					
 				
-
 					if($i < $numTime[$day]-1) {
 						if(calRange($tmp[$tmp_c],$tmp[$tmp_c+1]) > 0) {
-							for($x = 0;$x < calRange($tmp[$tmp_c],$tmp[$tmp_c+1])-2;$x++) {
+							for($x = 0;$x < calRange($tmp[$tmp_c],$tmp[$tmp_c+1]);$x++) {
 								echo "<td></td>";
+								$end++;
 							}
 						}
 					}
+
+					if($i == $numTime[$day]-1) {
+						$yy = ($maxCell-$end);
+						for($x = 0;$x < $yy;$x++) {
+							echo "<td></td>";
+							$end++;
+						}
+					}
+
 					$tmp_c++;
 					$i++;
-
 				}
-				echo "</tr>";
+				echo "$end,$maxCell,</tr>";
 			} ?>
 	</table>
 	</div>
