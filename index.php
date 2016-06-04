@@ -13,11 +13,11 @@
 		$minTime = 24;
 
 		$fData[0] = "We08:00-10:30 Lab Com 1\nTu08:00-10:00 Lab Com 1";
-		$fData[1] = "Tu13:00-15:00 Lab Com 1\nMo13:00-15:00 Lab Com 1";
+		$fData[1] = "Tu13:00-20:00 Lab Com 1\nMo13:00-15:00 Lab Com 1";
 		$fData[2] = "Th09:00-12:00 Lab Com 1";
 		$fData[3] = "Mo17:00-18:00 Lab Com 1";
 		$fData[4] = "Mo09:00-10:00 Lab Com 1";
-		$fData[5] = "Fr18:00-20:00 Lab Com 1\nTh13:00-20:00 Lab Com 1";
+		$fData[5] = "Fr08:00-20:00 Lab Com 1\nTh18:00-20:00 Lab Com 1";
 		
 		$fName[0] = "514124";
 		$fName[1] = "543545";
@@ -303,7 +303,7 @@
 					$tmp_c++;
 					$i++;
 				}
-				echo "$end,$maxCell,</tr>";
+				echo "</tr>";
 			} ?>
 	</table>
 	</div>
